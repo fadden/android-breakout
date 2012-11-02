@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Copyright 2012 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">Breakout</string>
+    <string name="button_newGame">Nuevo Juego</string>
+    <string name="button_resumeGame">Reanudar Juego</string>
+    <string name="button_about">Sobre</string>
+    
+    <string name="checkbox_neverLoseBall">Nunca perder la bola</string>
+    <string name="checkbox_soundEffectsEnabled">Efectos sonoros</string>
+    
+    <string name="text_highScoreLabel">Mejor Puntaje:</string>
+    
+    <!-- <string name="about_text"> ... -->
+    
+    <string name="msg_ready">Listo?</string>
+    <string name="msg_game_over">Juego Termina</string>
+    <string name="msg_winner">Ganador!</string>
+    
+    <string name="difficulty">Dificultad: </string>
+    <string name="ok">Bueno</string>
+    
+    <string-array name="difficulty_level_names">
+        <item>Fácil</item>
+        <item>Normal</item>
+        <item>Duro</item>
+        <item>Absurdo</item>
+    </string-array>
+</resources>    
