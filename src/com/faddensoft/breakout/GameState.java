@@ -427,13 +427,12 @@ public class GameState {
                 return false;
             }
             boolean[] bricks = save.mLiveBricks;
-            //mLiveBrickCount = 0;
             for (int i = 0; i < bricks.length; i++) {
                 if (bricks[i]) {
                     // board creation sets all bricks to "live", don't need to setAlive() here
-                    //mLiveBrickCount++;
                 } else {
                     mBricks[i].setAlive(false);
+                    mLiveBrickCount--;
                 }
             }
             //Log.d(TAG, "live brickcount is " + mLiveBrickCount);
