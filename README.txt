@@ -1,4 +1,4 @@
-Android Breakout v1.0.0
+Android Breakout v1.0.2
 
 This is a simple game intended to demonstrate various Android features.
 It features:

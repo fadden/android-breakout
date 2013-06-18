@@ -27,11 +27,13 @@ import java.nio.FloatBuffer;
 public class OutlineAlignedRect extends BasicAlignedRect {
     private static FloatBuffer sOutlineVertexBuffer = getOutlineVertexArray();
 
+    // Sanity check on draw prep.
+    private static boolean sDrawPrepared;
 
-    @Override
-    public void draw() {
-        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw start");
-
+    /**
+     * Performs setup common to all BasicAlignedRects.
+     */
+    public static void prepareToDraw() {
         // Set the program.  We use the same one as BasicAlignedRect.
         GLES20.glUseProgram(sProgramHandle);
         Util.checkGlError("glUseProgram");
@@ -40,10 +42,31 @@ public class OutlineAlignedRect extends BasicAlignedRect {
         GLES20.glEnableVertexAttribArray(sPositionHandle);
         Util.checkGlError("glEnableVertexAttribArray");
 
-        // Connect mVertexBuffer to "a_position".
+        // Connect sOutlineVertexBuffer to "a_position".
         GLES20.glVertexAttribPointer(sPositionHandle, COORDS_PER_VERTEX,
             GLES20.GL_FLOAT, false, VERTEX_STRIDE, sOutlineVertexBuffer);
         Util.checkGlError("glVertexAttribPointer");
+
+        sDrawPrepared = true;
+    }
+
+    /**
+     * Cleans up after drawing.
+     */
+    public static void finishedDrawing() {
+        sDrawPrepared = false;
+
+        // Disable vertex array and program.  Not strictly necessary.
+        GLES20.glDisableVertexAttribArray(sPositionHandle);
+        GLES20.glUseProgram(0);
+    }
+
+    @Override
+    public void draw() {
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw start");
+        if (!sDrawPrepared) {
+            throw new RuntimeException("not prepared");
+        }
 
         // Compute model/view/projection matrix.
         float[] mvp = sTempMVP;     // scratch storage
@@ -59,11 +82,6 @@ public class OutlineAlignedRect extends BasicAlignedRect {
 
         // Draw the rect.
         GLES20.glDrawArrays(GLES20.GL_LINE_LOOP, 0, VERTEX_COUNT);
-
-        // Disable vertex array and program.
-        GLES20.glDisableVertexAttribArray(sPositionHandle);
-        GLES20.glUseProgram(0);
-
-        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw end");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glDrawArrays");
     }
 }

@@ -934,7 +934,9 @@ public class GameState {
         // Draw a red outline rectangle around the ball.  This shows the area that was
         // examined for collisions during the "coarse" pass.
         if (true) {
+            OutlineAlignedRect.prepareToDraw();
             mDebugCollisionRect.draw();
+            OutlineAlignedRect.finishedDrawing();
         }
 
         // Draw the entire message texture so we can see what it looks like.
@@ -948,7 +950,9 @@ public class GameState {
             outline.setPosition(ARENA_WIDTH / 2, ARENA_HEIGHT / 2);
             outline.setScale(textureWidth * scale + 2, textureHeight * scale + 2);
             outline.setColor(1.0f, 0.65f, 0.0f);
+            OutlineAlignedRect.prepareToDraw();
             outline.draw();
+            OutlineAlignedRect.finishedDrawing();
 
             // Draw the full texture.  Note you can set the background to opaque white in
             // TextResources to see what the drop shadow looks like.
@@ -956,11 +960,13 @@ public class GameState {
             TexturedAlignedRect msgBox = mGameStatusMessages;
             msgBox.setTextureCoords(boundsRect);
             msgBox.setScale(textureWidth * scale, textureHeight * scale);
+            TexturedAlignedRect.prepareToDraw();
             msgBox.draw();
+            TexturedAlignedRect.finishedDrawing();
 
             // Draw a rectangle around each individual text item.  We draw a different one each
             // time to get a flicker effect, so it doesn't fully obscure the text.
-            if (false) {
+            if (true) {
                 outline.setColor(1.0f, 1.0f, 1.0f);
                 int stringNum = mDebugFramedString;
                 mDebugFramedString = (mDebugFramedString + 1) % TextResources.getNumStrings();
@@ -977,7 +983,9 @@ public class GameState {
                 // Set the values and draw the rect.
                 outline.setPosition(boundsCenterX, boundsCenterY);
                 outline.setScale(boundsRect.width() * scale, boundsRect.height() * scale);
+                OutlineAlignedRect.prepareToDraw();
                 outline.draw();
+                OutlineAlignedRect.finishedDrawing();
             }
         }
     }

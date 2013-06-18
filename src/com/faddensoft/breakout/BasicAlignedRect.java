@@ -106,6 +106,9 @@ public class BasicAlignedRect extends BaseRect {
     // RGBA color vector.
     float[] mColor = new float[4];
 
+    // Sanity check on draw prep.
+    private static boolean sDrawPrepared;
+
     /*
      * Scratch storage for the model/view/projection matrix.  We don't actually need to retain
      * it between calls, but we also don't want to re-allocate space for it every time we draw
@@ -163,10 +166,20 @@ public class BasicAlignedRect extends BaseRect {
     }
 
     /**
-     * Draws the rect.
+     * Performs setup common to all BasicAlignedRects.
      */
-    public void draw() {
-        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw start");
+    public static void prepareToDraw() {
+        /*
+         * We could do this setup in every draw() call.  However, experiments on a couple of
+         * different devices indicated that we can increase the CPU time required to draw a
+         * frame by as much as 2x.  Doing the setup once, then drawing all objects of that
+         * type (basic, outline, textured) provides a substantial CPU cost savings.
+         *
+         * It's a lot more awkward this way -- we want to draw similar types of objects
+         * together whenever possible, and we have to wrap calls with prepare/finish -- but
+         * avoiding configuration changes can improve efficiency, and the explicit prepare
+         * calls highlight potential efficiency problems.
+         */
 
         // Select the program.
         GLES20.glUseProgram(sProgramHandle);
@@ -176,10 +189,33 @@ public class BasicAlignedRect extends BaseRect {
         GLES20.glEnableVertexAttribArray(sPositionHandle);
         Util.checkGlError("glEnableVertexAttribArray");
 
-        // Connect mVertexBuffer to "a_position".
+        // Connect sVertexBuffer to "a_position".
         GLES20.glVertexAttribPointer(sPositionHandle, COORDS_PER_VERTEX,
             GLES20.GL_FLOAT, false, VERTEX_STRIDE, sVertexBuffer);
         Util.checkGlError("glVertexAttribPointer");
+
+        sDrawPrepared = true;
+    }
+
+    /**
+     * Cleans up after drawing.
+     */
+    public static void finishedDrawing() {
+        sDrawPrepared = false;
+
+        // Disable vertex array and program.  Not strictly necessary.
+        GLES20.glDisableVertexAttribArray(sPositionHandle);
+        GLES20.glUseProgram(0);
+    }
+
+    /**
+     * Draws the rect.
+     */
+    public void draw() {
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw start");
+        if (!sDrawPrepared) {
+            throw new RuntimeException("not prepared");
+        }
 
         // Compute model/view/projection matrix.
         float[] mvp = sTempMVP;     // scratch storage
@@ -187,19 +223,14 @@ public class BasicAlignedRect extends BaseRect {
 
         // Copy the model / view / projection matrix over.
         GLES20.glUniformMatrix4fv(sMVPMatrixHandle, 1, false, mvp, 0);
-        Util.checkGlError("glUniformMatrix4fv");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glUniformMatrix4fv");
 
         // Copy the color vector into the program.
         GLES20.glUniform4fv(sColorHandle, 1, mColor, 0);
-        Util.checkGlError("glUniform4fv ");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glUniform4fv ");
 
         // Draw the rect.
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT);
-
-        // Disable vertex array and program.
-        GLES20.glDisableVertexAttribArray(sPositionHandle);
-        GLES20.glUseProgram(0);
-
-        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw end");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glDrawArrays");
     }
 }

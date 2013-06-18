@@ -72,6 +72,8 @@ public class TexturedAlignedRect extends BaseRect {
     private int mTextureHeight = -1;
     private FloatBuffer mTexBuffer;
 
+    // Sanity check on draw prep.
+    private static boolean sDrawPrepared;
 
     /*
      * Scratch storage for the model/view/projection matrix.  We don't actually need to retain
@@ -184,27 +186,53 @@ public class TexturedAlignedRect extends BaseRect {
     }
 
     /**
-     * Draws the textured rect.
+     * Performs setup common to all BasicAlignedRects.
      */
-    public void draw() {
-        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw start");
-
+    public static void prepareToDraw() {
         // Select our program.
         GLES20.glUseProgram(sProgramHandle);
+        Util.checkGlError("glUseProgram");
 
         // Enable the "a_position" vertex attribute.
         GLES20.glEnableVertexAttribArray(sPositionHandle);
+        Util.checkGlError("glEnableVertexAttribArray");
 
         // Connect sVertexBuffer to "a_position".
         GLES20.glVertexAttribPointer(sPositionHandle, COORDS_PER_VERTEX,
             GLES20.GL_FLOAT, false, VERTEX_STRIDE, sVertexBuffer);
+        Util.checkGlError("glEnableVertexAttribPointer");
 
         // Enable the "a_texCoord" vertex attribute.
         GLES20.glEnableVertexAttribArray(sTexCoordHandle);
+        Util.checkGlError("glEnableVertexAttribArray");
 
-        // Connect sTexBuffer to "a_texCoord".
+        sDrawPrepared = true;
+    }
+
+    /**
+     * Cleans up after drawing.
+     */
+    public static void finishedDrawing() {
+        sDrawPrepared = false;
+
+        // Disable vertex array and program.  Not strictly necessary.
+        GLES20.glDisableVertexAttribArray(sPositionHandle);
+        GLES20.glUseProgram(0);
+    }
+
+    /**
+     * Draws the textured rect.
+     */
+    public void draw() {
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw start");
+        if (!sDrawPrepared) {
+            throw new RuntimeException("not prepared");
+        }
+
+        // Connect mTexBuffer to "a_texCoord".
         GLES20.glVertexAttribPointer(sTexCoordHandle, TEX_COORDS_PER_VERTEX,
             GLES20.GL_FLOAT, false, TEX_VERTEX_STRIDE, mTexBuffer);
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glVertexAttribPointer");
 
         // Compute model/view/projection matrix.
         float[] mvp = sTempMVP;     // scratch storage
@@ -212,25 +240,21 @@ public class TexturedAlignedRect extends BaseRect {
 
         // Copy the model / view / projection matrix over.
         GLES20.glUniformMatrix4fv(sMVPMatrixHandle, 1, false, mvp, 0);
-        Util.checkGlError("glUniformMatrix4fv");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glUniformMatrix4fv");
 
         // Set the active texture unit to unit 0.
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        Util.checkGlError("glActiveTexture");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glActiveTexture");
 
         // In OpenGL ES 1.1 you needed to call glEnable(GLES20.GL_TEXTURE_2D).  This is not
         // required in 2.0, and will actually raise a GL_INVALID_ENUM error.
 
         // Bind the texture data to the 2D texture target.
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glBindTexture");
 
         // Draw the rect.
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT);
-
-        // Disable vertex array and program.
-        GLES20.glDisableVertexAttribArray(sPositionHandle);
-        GLES20.glUseProgram(0);
-
-        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("draw end");
+        if (GameSurfaceRenderer.EXTRA_CHECK) Util.checkGlError("glDrawArrays");
     }
 }

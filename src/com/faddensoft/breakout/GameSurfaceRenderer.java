@@ -147,15 +147,13 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
             // limited by narrow width; restrict height
             viewWidth = width;
             viewHeight = (int) (width * arenaRatio);
-            x = 0;
-            y = (height - viewHeight) / 2;
         } else {
             // limited by short height; restrict width
             viewHeight = height;
             viewWidth = (int) (height / arenaRatio);
-            x = (width - viewWidth) / 2;
-            y = 0;
         }
+        x = (width - viewWidth) / 2;
+        y = (height - viewHeight) / 2;
 
         Log.d(TAG, "onSurfaceChanged w=" + width + " h=" + height);
         Log.d(TAG, " --> x=" + x + " y=" + y + " gw=" + viewWidth + " gh=" + viewHeight);
@@ -200,10 +198,12 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
         // Clear entire screen to background color.
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        // Draw the various elements.
+        // Draw the various elements.  These are all BasicAlignedRect.
+        BasicAlignedRect.prepareToDraw();
         gameState.drawBorders();
         gameState.drawBricks();
         gameState.drawPaddle();
+        BasicAlignedRect.finishedDrawing();
 
         /*
          * Draw alpha-blended components, notably the ball and score.
@@ -236,9 +236,12 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
         // Blend based on the fragment's alpha value.
         GLES20.glBlendFunc(GLES20.GL_ONE /*GL_SRC_ALPHA*/, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
+        TexturedAlignedRect.prepareToDraw();
         gameState.drawScore();
         gameState.drawBall();
         gameState.drawMessages();
+        TexturedAlignedRect.finishedDrawing();
+
         gameState.drawDebugStuff();
 
         // Turn alpha blending off.
@@ -301,8 +304,8 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
          * touches here.
          */
 
-        float arenaX = (x - mViewportXoff) * (GameState.ARENA_WIDTH / (float) mViewportWidth);
-        float arenaY = (y - mViewportYoff) * (GameState.ARENA_HEIGHT / (float) mViewportHeight);
+        float arenaX = (x - mViewportXoff) * (GameState.ARENA_WIDTH / mViewportWidth);
+        float arenaY = (y - mViewportYoff) * (GameState.ARENA_HEIGHT / mViewportHeight);
         //Log.v(TAG, "touch at x=" + (int) x + " y=" + (int) y + " --> arenaX=" + (int) arenaX);
 
         mGameState.movePaddle(arenaX);
