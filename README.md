@@ -40,16 +40,3 @@ Some information about the code can be found in the associated
 v1.0.1 (2012/12/07) - fixed a bug that could make it impossible to win
 
 v1.0.2 (2013/06/18) - minor efficiency improvements
-
-
-### Additional Features ###
-
-Some other things that could be added:
-
-- Cloud storage for preferences and scores.
-- Use of fancier GL features, like Vertex Buffer Objects, to improve
-  rendering efficiency.
-- Better configuration UI.  Could be more attractive, work better on
-  phone-sized devices.
-- Custom app icon.
-
