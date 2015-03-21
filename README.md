@@ -32,6 +32,9 @@ of the smaller display size.
 
 ![screengrab](breakout.png)
 
+Some information about the code can be found in the associated
+[wiki pages](https://github.com/fadden/android-breakout/wiki).
+
 ### Updates ###
 
 v1.0.1 (2012/12/07) - fixed a bug that could make it impossible to win
