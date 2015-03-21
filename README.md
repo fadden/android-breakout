@@ -30,6 +30,7 @@ Some of what you'll find in the sources:
 The game works well on tablets but it's hard to play on phones because
 of the smaller display size.
 
+![screengrab](breakout.png)
 
 ### Updates ###
 
