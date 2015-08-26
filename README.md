@@ -5,7 +5,7 @@ Android Breakout v1.0.2
 
 This is an Android implementation of the classic brick-breaking game.
 This is intended primarily as sample code, providing an example of a
-simple but complete game.
+simple but complete game.  It will run on Froyo (API 8) and later.
 
 Some of what you'll find in the sources:
 
