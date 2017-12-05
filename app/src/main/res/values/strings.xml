@@ -16,7 +16,7 @@ limitations under the License.
 -->
 
 <resources>
-    <string name="app_name">Breakout</string>
+    <string name="app_name">Can\'t Lose Breakout</string>
     <string name="button_newGame">New Game</string>
     <string name="button_resumeGame">Resume Game</string>
     <string name="button_about">About</string>
@@ -26,7 +26,7 @@ limitations under the License.
     
     <string name="text_highScoreLabel">High Score:</string>
     
-    <string name="about_text">\nA simple \'breakout\' app, inspired by Little Brick Out.\n\nhttp://www.android.com/\n</string>
+    <string name="about_text">\nA silly modification of the Android-Breakout game.\n\nJust try to lose :) \n\nhttps://github.com/jjerome00/android-breakout\n</string>
     
     <string name="msg_ready">Ready?</string>
     <string name="msg_game_over">Game Over</string>

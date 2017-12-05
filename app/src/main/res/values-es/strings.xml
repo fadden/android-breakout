@@ -16,7 +16,7 @@ limitations under the License.
 -->
 
 <resources>
-    <string name="app_name">Breakout</string>
+    <string name="app_name">No se puede perder Breakout</string>
     <string name="button_newGame">Nuevo Juego</string>
     <string name="button_resumeGame">Reanudar Juego</string>
     <string name="button_about">Sobre</string>
@@ -26,7 +26,7 @@ limitations under the License.
     
     <string name="text_highScoreLabel">Mejor Puntaje:</string>
     
-    <!-- <string name="about_text"> ... -->
+    <string name="about_text">Una modificación tonta del juego Android-Breakout.\n\n Solo trata de perder  :) \n\nhttps://github.com/jjerome00/android-breakout\n</string>
     
     <string name="msg_ready">Listo?</string>
     <string name="msg_game_over">Juego Termina</string>
