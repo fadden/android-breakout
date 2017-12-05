@@ -1,0 +1,93 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea/
+* .idea/encodings.xml
+* .idea/misc.xml
+* .idea/workspace.xml
+* COPYING
+* README.md
+* app/
+* app/build.gradle
+* app/src/
+* app/src/main/
+* app/src/main/AndroidManifest.xml
+* app/src/main/java/
+* app/src/main/java/com/
+* app/src/main/java/com/faddensoft/
+* app/src/main/java/com/faddensoft/breakout/
+* app/src/main/java/com/faddensoft/breakout/AboutBox.java
+* app/src/main/java/com/faddensoft/breakout/Ball.java
+* app/src/main/java/com/faddensoft/breakout/BaseRect.java
+* app/src/main/java/com/faddensoft/breakout/BasicAlignedRect.java
+* app/src/main/java/com/faddensoft/breakout/BreakoutActivity.java
+* app/src/main/java/com/faddensoft/breakout/Brick.java
+* app/src/main/java/com/faddensoft/breakout/GameActivity.java
+* app/src/main/java/com/faddensoft/breakout/GameState.java
+* app/src/main/java/com/faddensoft/breakout/GameSurfaceRenderer.java
+* app/src/main/java/com/faddensoft/breakout/GameSurfaceView.java
+* app/src/main/java/com/faddensoft/breakout/OutlineAlignedRect.java
+* app/src/main/java/com/faddensoft/breakout/SoundResources.java
+* app/src/main/java/com/faddensoft/breakout/TextResources.java
+* app/src/main/java/com/faddensoft/breakout/TexturedAlignedRect.java
+* app/src/main/java/com/faddensoft/breakout/Util.java
+* app/src/main/res/
+* app/src/main/res/drawable-hdpi/
+* app/src/main/res/drawable-hdpi/ic_launcher.png
+* app/src/main/res/drawable-ldpi/
+* app/src/main/res/drawable-ldpi/ic_launcher.png
+* app/src/main/res/drawable-mdpi/
+* app/src/main/res/drawable-mdpi/ic_launcher.png
+* app/src/main/res/drawable-xhdpi/
+* app/src/main/res/drawable-xhdpi/ic_launcher.png
+* app/src/main/res/layout-land/
+* app/src/main/res/layout-land/main.xml
+* app/src/main/res/layout/
+* app/src/main/res/layout/about.xml
+* app/src/main/res/layout/main.xml
+* app/src/main/res/layout/main1.xml
+* app/src/main/res/layout/main2.xml
+* app/src/main/res/values-es/
+* app/src/main/res/values-es/strings.xml
+* app/src/main/res/values/
+* app/src/main/res/values/strings.xml
+* breakout.png
+* build.gradle
+* gradle/
+* gradle/wrapper/
+* gradle/wrapper/gradle-wrapper.jar
+* gradle/wrapper/gradle-wrapper.properties
+* gradlew
+* gradlew.bat
+* proguard-project.txt
+* settings.gradle
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
