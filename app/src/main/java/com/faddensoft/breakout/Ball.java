@@ -156,9 +156,9 @@ public class Ball extends TexturedAlignedRect {
 
             for (int x = xleft ; x <= xright; x++) {
                 int offset = (y * TEX_SIZE + x) * BYTES_PER_PIXEL;
-                buf[offset]   = (byte) 0xff;    // red
-                buf[offset+1] = (byte) 0xff;    // green
-                buf[offset+2] = (byte) 0xff;    // blue
+                buf[offset]   = (byte) 255;    // red
+                buf[offset+1] = (byte) 229;    // green
+                buf[offset+2] = (byte) 204;    // blue
                 buf[offset+3] = (byte) 0xff;    // alpha
             }
         }

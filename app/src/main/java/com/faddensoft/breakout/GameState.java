@@ -148,9 +148,9 @@ public class GameState {
      * touch space outside the viewport, but we can't rely on that.
      */
     private static final float PADDLE_VERTICAL_PERC = 12 / 100.0f;
-    private static final float PADDLE_HEIGHT_PERC = 1 / 60.0f;
+    private static final float PADDLE_HEIGHT_PERC = 1 / 30.0f;
     private static final float PADDLE_WIDTH_PERC = 2 / 100.0f;
-    private static final int PADDLE_DEFAULT_WIDTH = 25;
+    private static final int PADDLE_DEFAULT_WIDTH = 26;
 
     /*
      * Ball dimensions.  Internally it's just a rect, but we'll give it a circular texture so

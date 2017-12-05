@@ -198,6 +198,7 @@ public class GameActivity extends Activity {
         }
 
         // always win
+        ballSize = 20;
         maxLives = 1;
         sNeverLoseBall = true;
         sSoundEffectsEnabled = true;
