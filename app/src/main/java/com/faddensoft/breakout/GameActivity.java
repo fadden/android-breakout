@@ -165,7 +165,7 @@ public class GameActivity extends Activity {
                 ballSize = 2.0f;
                 paddleSize = 2.0f;
                 scoreMultiplier = 0.75f;
-                maxLives = 4;
+                maxLives = 1;
                 minSpeed = 200;
                 maxSpeed = 500;
                 break;
@@ -196,6 +196,11 @@ public class GameActivity extends Activity {
             default:
                 throw new RuntimeException("bad difficulty index " + sDifficultyIndex);
         }
+
+        // always win
+        maxLives = 1;
+        sNeverLoseBall = true;
+        sSoundEffectsEnabled = true;
 
         mGameState.setBallSizeMultiplier(ballSize);
         mGameState.setPaddleSizeMultiplier(paddleSize);

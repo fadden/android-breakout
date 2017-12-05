@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2012 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,41 +17,47 @@ limitations under the License.
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:layout_weight="2"
     android:gravity="center"
-    android:layout_weight="2" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp" > 
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/difficulty"
             android:textSize="30sp"
-            android:text="@string/difficulty" />
+            android:visibility="invisible" />
+
         <Spinner
             android:id="@+id/spinner_difficultyLevel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
     </LinearLayout>
-    
+
     <CheckBox
         android:id="@+id/checkbox_neverLoseBall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:onClick="clickNeverLoseBall"
         android:text="@string/checkbox_neverLoseBall"
         android:textSize="30sp"
-        android:onClick="clickNeverLoseBall" />
+        android:visibility="invisible" />
 
     <CheckBox
         android:id="@+id/checkbox_soundEffectsEnabled"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="clickSoundEffectsEnabled"
         android:text="@string/checkbox_soundEffectsEnabled"
         android:textSize="30sp"
-        android:onClick="clickSoundEffectsEnabled" />
-    
+        android:visibility="invisible" />
+
 </LinearLayout>
