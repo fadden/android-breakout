@@ -17,6 +17,7 @@
 package com.faddensoft.breakout;
 
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 /**
@@ -103,8 +104,8 @@ public class GameState {
     private static final float BRICK_TOP_PERC = 85 / 100.0f;
     private static final float BRICK_BOTTOM_PERC = 43 / 100.0f;
     private static final float BORDER_WIDTH_PERC = 2 / 100.0f;
-    private static final int BRICK_COLUMNS = 12;
-    private static final int BRICK_ROWS = 8;
+    private static final int BRICK_COLUMNS = 6;
+    private static final int BRICK_ROWS = 4;
 
     private static final float BORDER_WIDTH = (int) (BORDER_WIDTH_PERC * ARENA_WIDTH);
 
@@ -147,9 +148,9 @@ public class GameState {
      * touch space outside the viewport, but we can't rely on that.
      */
     private static final float PADDLE_VERTICAL_PERC = 12 / 100.0f;
-    private static final float PADDLE_HEIGHT_PERC = 1 / 100.0f;
+    private static final float PADDLE_HEIGHT_PERC = 1 / 60.0f;
     private static final float PADDLE_WIDTH_PERC = 2 / 100.0f;
-    private static final int PADDLE_DEFAULT_WIDTH = 6;
+    private static final int PADDLE_DEFAULT_WIDTH = 25;
 
     /*
      * Ball dimensions.  Internally it's just a rect, but we'll give it a circular texture so
@@ -297,6 +298,14 @@ public class GameState {
      */
     private TextResources mTextRes;
 
+    /*
+     * Media player stuff
+     */
+    private MediaPlayer mPlayer = null;
+
+    public void setMediaPlayer(MediaPlayer mediaPlayer) {
+        mPlayer = mediaPlayer;
+    }
 
     public GameState() {}
 
@@ -910,6 +919,21 @@ public class GameState {
 
             //Log.d(TAG, "drawing " + mGameStatusMessageNum);
             msgBox.draw();
+
+            if (mGameStatusMessageNum == 2) {
+                //winner!
+                playTada();
+            }
+
+        }
+    }
+
+    /**
+     * Play the tada! sound.
+     */
+    void playTada() {
+        if (mPlayer != null) {
+            mPlayer.start();
         }
     }
 
@@ -1477,7 +1501,7 @@ public class GameState {
      * @return true if we might collide with this object.
      */
     private boolean checkCoarseCollision(BaseRect target, float left, float right,
-            float bottom, float top) {
+                                         float bottom, float top) {
         /*
          * This is a "coarse" detection, so we can play fast and loose.  One approach is to
          * essentially draw a circle around each object, and see if the circles intersect.
@@ -1565,8 +1589,8 @@ public class GameState {
      * @return The object we struck, or null if none.
      */
     private BaseRect findFirstCollision(BaseRect[] rects, final int numRects, final float curX,
-            final float curY, final float dirX, final float dirY, final float distance,
-            final float radius) {
+                                        final float curY, final float dirX, final float dirY, final float distance,
+                                        final float radius) {
         /*
          * The "coarse" function has indicated that a collision is possible.  We need to get
          * an exact determination of what we're hitting.
